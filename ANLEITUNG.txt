@@ -1,0 +1,17 @@
+RENOVATOR – ÖFFENTLICHE VERSION (Netlify + Supabase)
+
+1. In Supabase (https://supabase.com) ein kostenloses Projekt erstellen.
+2. Im SQL Editor den gesamten Inhalt von schema.sql ausführen.
+3. In Supabase unter Project Settings / API die Project URL und den geheimen service_role key ermitteln. Diesen Schlüssel NIEMALS in HTML einfügen oder öffentlich weitergeben.
+4. In Netlify eine neue Website erstellen. Den gesamten Ordner renovator_public als Website bereitstellen (nicht nur index.html). Netlify muss die netlify/functions-Datei erkennen und bereitstellen. Am einfachsten: Ordner in ein GitHub-Repository hochladen und Netlify mit dem Repository verbinden. Bei manueller Drag-and-drop-Veröffentlichung werden Netlify Functions ggf. NICHT gebaut; dann funktionieren Einträge nicht.
+5. Unter Netlify: Site configuration > Environment variables diese fünf Variablen hinterlegen:
+   SUPABASE_URL = Projekt-URL aus Supabase
+   SUPABASE_SERVICE_ROLE_KEY = geheimer service_role key
+   RENOVATOR_MANAGER_PASSWORD = gewünschtes Passwort für deinen Freund
+   RENOVATOR_ADMIN_PASSWORD = separates Admin-Passwort
+   RENOVATOR_SESSION_SECRET = zufällige lange Zeichenfolge (mindestens 32 Zeichen)
+   Scope für die Variablen: Functions / alle Deploy-Kontexte nach Bedarf.
+6. Neue Bereitstellung (Deploy) starten, damit die Umgebungsvariablen wirksam werden.
+7. Testen: Öffentliche Seite auf zwei Geräten öffnen, in Verwaltung anmelden, Aufgabe anlegen, Zusage auf Gerät A eintragen, auf Gerät B überprüfen.
+
+WICHTIG: Das Verwaltungspasswort wird in dieser Version über die Netlify-Umgebungsvariable geändert, NICHT in der App. Eine Passwortänderungsmaske für den Freund ist noch nicht umgesetzt. Das Admin-Passwort ist nicht in der Website enthalten. Die App ist ein erster Online-Prototyp, keine produktiv gehärtete Anwendung. Eine automatische Benachrichtigung, Bearbeiten bestehender Aufgaben und Änderung eigener Zusagen sind noch nicht umgesetzt; eigene Einträge können über das gleiche Browserprofil zurückgezogen werden. Die Web-App zeigt Namen und Einsatzzeiten öffentlich an: Informiere die Helfer darüber und veröffentliche keine privaten Kontaktdaten. Zusagen werden im Browser nicht dauerhaft authentifiziert, sondern mit lokal gespeicherten Lösch-Tokens verwaltet. Beim Browserwechsel gehen diese Berechtigungen verloren. Für dauerhaften Betrieb empfehlen sich zusätzliche Schutzmaßnahmen wie Rate-Limits, Spam-Schutz und ein Datenschutz-Hinweis.
